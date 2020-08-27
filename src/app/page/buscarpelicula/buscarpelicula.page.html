@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-title class="ion-text-center">Buscar Peliculas</ion-title>
+
+
+    </ion-buttons>
+
+
+  </ion-toolbar>
+  <ion-searchbar [(ngModel)]="name" color="danger" (keyup.enter)="getMovie($event)"></ion-searchbar>
+</ion-header>
+<ion-content>
+  <ng-template #otraimagen>
+    <ion-thumbnail slot="start">
+      <img src="assets/img/noimg.jpg" />
+    </ion-thumbnail>
+  </ng-template>
+  <ion-list>
+    <ion-item [routerLink]="['../detail/',item.id]" *ngFor="let item of ListMovie">
+      <ion-label>
+        <!--  <input type="text" [(ngModel)]="idMovie" value="{{item.id}}"> -->
+        {{item.original_title}}
+      </ion-label>
+
+      <ion-thumbnail slot="start" *ngIf="item.poster_path else otraimagen">
+        <img src="https://image.tmdb.org/t/p/original/{{item.poster_path}}" />
+      </ion-thumbnail>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="getMovie($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
